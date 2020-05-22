@@ -85,8 +85,14 @@ public class FlutterBuglyPlugin implements MethodCallHandler {
                 Beta.upgradeListener = new UpgradeListener() {
                     @Override
                     public void onUpgrade(int ret, UpgradeInfo strategy, boolean isManual, boolean isSilence) {
+                        if (strategy == null) {
+                            strategy = Beta.getUpgradeInfo();
+                        }
+                        if (strategy != null) {
+                            upgradeInfo = strategy;
+                        }
                         if (callback != null) {
-                            callback.onUpgrade(strategy);
+                            callback.onUpgrade(upgradeInfo);
                         }
                     }
                 };
